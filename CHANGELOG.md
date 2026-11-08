@@ -2,10 +2,11 @@
 
 All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.1.1] - 2026-11-08
 
 ### Changed
 - Docs: USB and Wi-Fi verified on a physical Google Pixel.
+- CI: GitHub Actions updated (checkout and upload-artifact v7); releases publish automatically with notes from this changelog.
 
 ### Fixed
 - Wi-Fi pairing: clear explanations for adb pairing errors (wrong port, wrong code, unreachable) and a warning when the pairing and connect addresses are the same.
@@ -26,4 +27,5 @@ First public release.
 - Remembers the last Mac folder.
 - Universal (Apple Silicon + Intel) unsigned app and DMG, built by GitHub Actions.
 
+[0.1.1]: https://github.com/arunmenon1807/androbridge/releases/tag/v0.1.1
 [0.1.0]: https://github.com/arunmenon1807/androbridge/releases/tag/v0.1.0
