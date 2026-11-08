@@ -64,7 +64,7 @@ ln -s /Applications "$STAGE/Applications"
 DMG="dist/AndroBridge-$VERSION.dmg"
 hdiutil create -volname "AndroBridge $VERSION" -srcfolder "$STAGE" -ov -format UDZO "$DMG" >/dev/null
 rm -rf "$STAGE"
-shasum -a 256 "$DMG" | tee "$DMG.sha256"
+(cd dist && shasum -a 256 "$(basename "$DMG")" | tee "$(basename "$DMG").sha256")
 
 echo
 echo "Built: $APP"

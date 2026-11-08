@@ -7,6 +7,9 @@ All notable changes to this project are documented here. The format follows [Kee
 ### Changed
 - Docs: USB transfers verified on a physical Google Pixel.
 
+### Fixed
+- The release `.sha256` file now names the DMG without a `dist/` prefix, so `shasum -a 256 -c` works after download.
+
 ## [0.1.0] - 2026-11-08
 
 First public release.
