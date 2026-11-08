@@ -5,7 +5,7 @@ All notable changes to this project are documented here. The format follows [Kee
 ## [Unreleased]
 
 ### Changed
-- Docs: USB transfers verified on a physical Google Pixel.
+- Docs: USB and Wi-Fi verified on a physical Google Pixel.
 
 ### Fixed
 - Wi-Fi pairing: clear explanations for adb pairing errors (wrong port, wrong code, unreachable) and a warning when the pairing and connect addresses are the same.

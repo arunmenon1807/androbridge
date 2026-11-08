@@ -15,7 +15,7 @@ A free, open-source, native macOS file manager for Android phones. Plug in your 
 - **Private**: no account, no cloud, no analytics, no network traffic except to phones you connect.
 - **Safe**: every transfer is written to a hidden temporary item, verified (sizes + SHA-256), then renamed into place. Nothing is overwritten silently; moves only remove the source after the copy is verified; Mac files you delete or replace go to the Trash.
 
-Verified by the maintainer on a physical Google Pixel over USB, plus an automated test suite on an Android 16 emulator.
+Verified by the maintainer on a physical Google Pixel over USB and Wi‑Fi, plus an automated test suite on an Android 16 emulator.
 
 It talks to the phone with Google's **adb** (Android Debug Bridge), over USB or Wi-Fi, so the phone needs USB debugging turned on (a one-time switch; see below). A mode that works without it (MTP) is on the [roadmap](docs/ROADMAP.md).
 
@@ -34,7 +34,7 @@ It talks to the phone with Google's **adb** (Android Debug Bridge), over USB or 
 | New folder, rename, delete (with confirmation), copy/paste within the phone | ✅ |
 | Open / Quick Look phone files (fetched to a temporary read‑only copy) | ✅ |
 | Phone and Mac free‑space display | ✅ |
-| Wi‑Fi: pair with code, connect, mDNS discovery, remembered phones, auto‑reconnect | ✅ implemented, **not yet tested with a real phone** |
+| Wi‑Fi: pair with code, connect, mDNS discovery, remembered phones, auto‑reconnect | ✅ (verified on a Pixel) |
 | Finder sidebar integration (File Provider) | ❌ not built, see [docs/ROADMAP.md](docs/ROADMAP.md) |
 | MTP mode (no USB debugging) | ❌ not built, see [docs/ROADMAP.md](docs/ROADMAP.md) |
 
@@ -111,7 +111,7 @@ ANDROBRIDGE_DEVICE_TESTS=1 swift test --filter DeviceIntegrationTests
 ANDROBRIDGE_DEVICE_TESTS=1 ANDROBRIDGE_DEVICE_SERIAL=<serial> swift test --filter DeviceIntegrationTests
 ```
 
-They create and remove `/sdcard/Download/AndroBridgeTest-*` on the device. The app has been checked by hand on a physical Google Pixel over USB; passing on an emulator alone isn't proof for other phones, so see [docs/PHONE-TEST-CHECKLIST.md](docs/PHONE-TEST-CHECKLIST.md) for the checks only a real phone can answer.
+They create and remove `/sdcard/Download/AndroBridgeTest-*` on the device. The app has been checked by hand on a physical Google Pixel over USB and Wi‑Fi; passing on an emulator alone isn't proof for other phones, so see [docs/PHONE-TEST-CHECKLIST.md](docs/PHONE-TEST-CHECKLIST.md) for the checks only a real phone can answer.
 
 ### CI
 
