@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key><string>en</string>
+    <key>CFBundleDisplayName</key><string>PixelBridge</string>
+    <key>CFBundleExecutable</key><string>PixelBridge</string>
+    <key>CFBundleIconFile</key><string>AppIcon</string>
+    <key>CFBundleIdentifier</key><string>app.pixelbridge.PixelBridge</string>
+    <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+    <key>CFBundleName</key><string>PixelBridge</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>CFBundleShortVersionString</key><string>__VERSION__</string>
+    <key>CFBundleVersion</key><string>__BUILD__</string>
+    <key>LSApplicationCategoryType</key><string>public.app-category.utilities</string>
+    <key>LSMinimumSystemVersion</key><string>14.0</string>
+    <key>NSHighResolutionCapable</key><true/>
+    <key>NSHumanReadableCopyright</key><string>Free for personal use. No accounts, no telemetry.</string>
+    <key>NSDesktopFolderUsageDescription</key><string>PixelBridge shows your Desktop so you can copy files to and from your phone.</string>
+    <key>NSDocumentsFolderUsageDescription</key><string>PixelBridge shows your Documents so you can copy files to and from your phone.</string>
+    <key>NSDownloadsFolderUsageDescription</key><string>PixelBridge shows your Downloads so you can copy files to and from your phone.</string>
+    <key>NSLocalNetworkUsageDescription</key><string>PixelBridge connects to your phone over Wi-Fi when you use Wireless debugging.</string>
+    <key>NSBonjourServices</key>
+    <array>
+        <string>_adb-tls-connect._tcp</string>
+        <string>_adb-tls-pairing._tcp</string>
+    </array>
+    <key>UTExportedTypeDeclarations</key>
+    <array>
+        <dict>
+            <key>UTTypeIdentifier</key><string>app.pixelbridge.remote-item</string>
+            <key>UTTypeDescription</key><string>PixelBridge phone item</string>
+            <key>UTTypeConformsTo</key><array><string>public.data</string></array>
+        </dict>
+    </array>
+</dict>
+</plist>
