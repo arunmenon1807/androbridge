@@ -63,7 +63,25 @@ public final class ADBClient: @unchecked Sendable {
         if result.succeeded && text.lowercased().contains("successfully paired") {
             return text.trimmingCharacters(in: .whitespacesAndNewlines)
         }
-        throw DeviceError.commandFailed("Pairing failed: \(text.trimmingCharacters(in: .whitespacesAndNewlines))")
+        throw DeviceError.commandFailed(Self.explainPairingFailure(text))
+    }
+
+    /// Turns adb's raw pairing errors into something a person can act on.
+    public static func explainPairingFailure(_ raw: String) -> String {
+        let text = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        let lower = text.lowercased()
+        if lower.contains("protocol fault") || lower.contains("couldn't read status") {
+            // Reached something on that port, but not the pairing service: almost always the
+            // main-screen (connect) port was used, or the pairing pop-up was closed.
+            return "Pairing failed: the phone didn’t answer as a pairing service on that port. Use the IP address & port shown in the “Pair device with pairing code” pop-up (not the one on the main Wireless debugging screen), and keep that pop-up open while you pair."
+        }
+        if lower.contains("wrong password") || lower.contains("failed: unable to start pairing") || lower.contains("authentication") {
+            return "Pairing failed: the code didn’t match. Codes change each time the pop-up opens; enter the one currently shown."
+        }
+        if lower.contains("connection refused") || lower.contains("no route") || lower.contains("timed out") || lower.contains("timeout") {
+            return "Pairing failed: couldn’t reach the phone. Check both are on the same Wi-Fi, the pairing pop-up is open, and macOS allowed AndroBridge to access the local network (System Settings → Privacy & Security → Local Network)."
+        }
+        return "Pairing failed: \(text)"
     }
 
     /// `adb connect HOST:PORT`. Note the connect port differs from the pairing port.

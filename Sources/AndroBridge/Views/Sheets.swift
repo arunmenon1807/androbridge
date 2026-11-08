@@ -112,7 +112,7 @@ struct WirelessSheet: View {
 
             GroupBox("1 · Pair (first time only)") {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Tap **Pair device with pairing code** on the phone and enter the IP address & port and 6-digit code it shows.")
+                    Text("Tap **Pair device with pairing code** on the phone. Enter the IP address & port **from that pop-up** (it differs from the main screen) and its 6-digit code, and keep the pop-up open.")
                         .font(.caption).foregroundStyle(.secondary)
                     HStack {
                         TextField("192.168.1.20:37011", text: $pairAddress).textFieldStyle(.roundedBorder)
@@ -196,6 +196,10 @@ struct WirelessSheet: View {
     }
 
     private func pair() async {
+        if !connectAddress.isEmpty, pairAddress.trimmingCharacters(in: .whitespaces) == connectAddress.trimmingCharacters(in: .whitespaces) {
+            show("The pairing and connect addresses are the same. The pairing port is the one in the “Pair device with pairing code” pop-up, not the main Wireless debugging screen.", error: true)
+            return
+        }
         guard let service, let (host, port) = WirelessConnectionService.parseAddress(pairAddress) else {
             show("Enter the address as IP:port, e.g. 192.168.1.20:37011", error: true)
             return
