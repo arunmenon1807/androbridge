@@ -1,4 +1,4 @@
-// Draws the PixelBridge app icon and writes an .iconset. Run by build-app.sh.
+// Draws the AndroBridge app icon and writes an .iconset. Run by build-app.sh.
 import AppKit
 
 let out = CommandLine.arguments[1]

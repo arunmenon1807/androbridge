@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Builds dist/PixelBridge.app (universal: Apple Silicon + Intel) and dist/PixelBridge-<version>.dmg.
+# Builds dist/AndroBridge.app (universal: Apple Silicon + Intel) and dist/AndroBridge-<version>.dmg.
 #
 #   scripts/build-app.sh                 # unsigned (ad-hoc signed) local build
-#   scripts/build-app.sh --bundle-adb    # also copy your installed adb into the app (personal use only)
+#   scripts/build-app.sh --bundle-adb    # also copy your installed adb into the app (for your own build; see README licensing note)
 #   scripts/build-app.sh --arch arm64    # Apple Silicon only (faster)
 #   SIGN_IDENTITY="Developer ID Application: …" scripts/build-app.sh   # sign with a real certificate
 set -euo pipefail
@@ -23,11 +23,11 @@ done
 
 echo "==> Building release binary (${ARCHS[*]})"
 swift build -c release "${ARCHS[@]}"
-BIN="$(swift build -c release "${ARCHS[@]}" --show-bin-path)/PixelBridge"
+BIN="$(swift build -c release "${ARCHS[@]}" --show-bin-path)/AndroBridge"
 
-APP=dist/PixelBridge.app
+APP=dist/AndroBridge.app
 rm -rf dist && mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
-cp "$BIN" "$APP/Contents/MacOS/PixelBridge"
+cp "$BIN" "$APP/Contents/MacOS/AndroBridge"
 sed -e "s/__VERSION__/$VERSION/" -e "s/__BUILD__/$BUILD/" Resources/Info.plist > "$APP/Contents/Info.plist"
 printf 'APPL????' > "$APP/Contents/PkgInfo"
 
@@ -41,7 +41,7 @@ if [[ $BUNDLE_ADB == 1 ]]; then
   [[ -z "$ADB" && -x "$HOME/Library/Android/sdk/platform-tools/adb" ]] && ADB="$HOME/Library/Android/sdk/platform-tools/adb"
   [[ -z "$ADB" ]] && { echo "adb not found; install android-platform-tools first"; exit 1; }
   PT="$(cd "$(dirname "$(readlink -f "$ADB")")" && pwd)"
-  echo "==> Bundling adb from $PT (personal use; see README licensing note)"
+  echo "==> Bundling adb from $PT (see README licensing note)"
   mkdir -p "$APP/Contents/Resources/platform-tools"
   cp "$PT/adb" "$APP/Contents/Resources/platform-tools/"
   [[ -d "$PT/lib64" ]] && cp -R "$PT/lib64" "$APP/Contents/Resources/platform-tools/"
@@ -61,12 +61,12 @@ echo "==> Creating DMG"
 STAGE="$(mktemp -d)"
 cp -R "$APP" "$STAGE/"
 ln -s /Applications "$STAGE/Applications"
-DMG="dist/PixelBridge-$VERSION.dmg"
-hdiutil create -volname "PixelBridge $VERSION" -srcfolder "$STAGE" -ov -format UDZO "$DMG" >/dev/null
+DMG="dist/AndroBridge-$VERSION.dmg"
+hdiutil create -volname "AndroBridge $VERSION" -srcfolder "$STAGE" -ov -format UDZO "$DMG" >/dev/null
 rm -rf "$STAGE"
 shasum -a 256 "$DMG" | tee "$DMG.sha256"
 
 echo
 echo "Built: $APP"
 echo "       $DMG"
-lipo -archs "$APP/Contents/MacOS/PixelBridge"
+lipo -archs "$APP/Contents/MacOS/AndroBridge"

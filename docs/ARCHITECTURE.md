@@ -9,7 +9,7 @@ macOS has no built-in MTP support, and Apple's File Provider and USB APIs don't 
 ```
 SwiftUI views ── AppModel / PaneModel (view models, @Observable)
                      │
-PixelBridgeCore ─────┼───────────────────────────────────────────────
+AndroBridgeCore ─────┼───────────────────────────────────────────────
   DeviceDiscoveryService   polls `adb devices -l` every 1.5 s
   TransferQueueManager     serial queue, progress/speed/ETA, history (JSON)
   FileTransferService      one verified transfer (staging → verify → finalize)
@@ -34,7 +34,7 @@ The design document's `ADBConnectionService` is `ADBClient`; `FileBrowserService
 1. **Prepare**: stat the source and build a manifest (relative path → size) of every regular file.
 2. **Conflict**: if the destination name exists, ask (Skip / Replace / Keep Both) unless Settings says otherwise.
 3. **Space check** on the destination volume.
-4. **Copy** to `.pixelbridge-<uuid>.partial` beside the destination with `adb pull -a` / `adb push`. Progress comes from watching that item grow (local stat every 0.4 s; remote stat every 1 s).
+4. **Copy** to `.androbridge-<uuid>.partial` beside the destination with `adb pull -a` / `adb push`. Progress comes from watching that item grow (local stat every 0.4 s; remote stat every 1 s).
 5. **Verify**: file list and sizes must match; with checksums on (default, and always for moves) SHA‑256 is computed on both sides (`sha256sum` on the phone, CryptoKit streaming on the Mac).
 6. **Finalize**: Replace moves the old Mac item to the Trash / deletes the old phone item, then renames the staging item into place.
 7. **Move**: only now is the source removed (Mac sources to the Trash).

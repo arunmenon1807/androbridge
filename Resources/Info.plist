@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleDevelopmentRegion</key><string>en</string>
-    <key>CFBundleDisplayName</key><string>PixelBridge</string>
-    <key>CFBundleExecutable</key><string>PixelBridge</string>
+    <key>CFBundleDisplayName</key><string>AndroBridge</string>
+    <key>CFBundleExecutable</key><string>AndroBridge</string>
     <key>CFBundleIconFile</key><string>AppIcon</string>
-    <key>CFBundleIdentifier</key><string>app.pixelbridge.PixelBridge</string>
+    <key>CFBundleIdentifier</key><string>io.github.arunmenon1807.AndroBridge</string>
     <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
-    <key>CFBundleName</key><string>PixelBridge</string>
+    <key>CFBundleName</key><string>AndroBridge</string>
     <key>CFBundlePackageType</key><string>APPL</string>
     <key>CFBundleShortVersionString</key><string>__VERSION__</string>
     <key>CFBundleVersion</key><string>__BUILD__</string>
     <key>LSApplicationCategoryType</key><string>public.app-category.utilities</string>
     <key>LSMinimumSystemVersion</key><string>14.0</string>
     <key>NSHighResolutionCapable</key><true/>
-    <key>NSHumanReadableCopyright</key><string>Free for personal use. No accounts, no telemetry.</string>
-    <key>NSDesktopFolderUsageDescription</key><string>PixelBridge shows your Desktop so you can copy files to and from your phone.</string>
-    <key>NSDocumentsFolderUsageDescription</key><string>PixelBridge shows your Documents so you can copy files to and from your phone.</string>
-    <key>NSDownloadsFolderUsageDescription</key><string>PixelBridge shows your Downloads so you can copy files to and from your phone.</string>
-    <key>NSLocalNetworkUsageDescription</key><string>PixelBridge connects to your phone over Wi-Fi when you use Wireless debugging.</string>
+    <key>NSHumanReadableCopyright</key><string>Copyright © 2026 Arun Menon. MIT License.</string>
+    <key>NSDesktopFolderUsageDescription</key><string>AndroBridge shows your Desktop so you can copy files to and from your phone.</string>
+    <key>NSDocumentsFolderUsageDescription</key><string>AndroBridge shows your Documents so you can copy files to and from your phone.</string>
+    <key>NSDownloadsFolderUsageDescription</key><string>AndroBridge shows your Downloads so you can copy files to and from your phone.</string>
+    <key>NSLocalNetworkUsageDescription</key><string>AndroBridge connects to your phone over Wi-Fi when you use Wireless debugging.</string>
     <key>NSBonjourServices</key>
     <array>
         <string>_adb-tls-connect._tcp</string>
@@ -28,8 +28,8 @@
     <key>UTExportedTypeDeclarations</key>
     <array>
         <dict>
-            <key>UTTypeIdentifier</key><string>app.pixelbridge.remote-item</string>
-            <key>UTTypeDescription</key><string>PixelBridge phone item</string>
+            <key>UTTypeIdentifier</key><string>io.github.arunmenon1807.androbridge.remote-item</string>
+            <key>UTTypeDescription</key><string>AndroBridge phone item</string>
             <key>UTTypeConformsTo</key><array><string>public.data</string></array>
         </dict>
     </array>

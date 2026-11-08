@@ -1,13 +1,13 @@
 import XCTest
-@testable import PixelBridgeCore
+@testable import AndroBridgeCore
 
 /// End-to-end tests against a real phone or emulator over ADB.
 ///
-/// Skipped unless `PIXELBRIDGE_DEVICE_TESTS=1`. Uses the device in
-/// `PIXELBRIDGE_DEVICE_SERIAL`, or the first authorized device.
-/// Everything is created under /sdcard/Download/PixelBridgeTest-<uuid> and removed afterwards.
+/// Skipped unless `ANDROBRIDGE_DEVICE_TESTS=1`. Uses the device in
+/// `ANDROBRIDGE_DEVICE_SERIAL`, or the first authorized device.
+/// Everything is created under /sdcard/Download/AndroBridgeTest-<uuid> and removed afterwards.
 ///
-///     PIXELBRIDGE_DEVICE_TESTS=1 swift test --filter DeviceIntegrationTests
+///     ANDROBRIDGE_DEVICE_TESTS=1 swift test --filter DeviceIntegrationTests
 final class DeviceIntegrationTests: XCTestCase {
     var client: ADBClient!
     var device: AndroidDevice!
@@ -16,18 +16,18 @@ final class DeviceIntegrationTests: XCTestCase {
     let engine = FileTransferService()
 
     override func setUp() async throws {
-        guard ProcessInfo.processInfo.environment["PIXELBRIDGE_DEVICE_TESTS"] == "1" else {
-            throw XCTSkip("Set PIXELBRIDGE_DEVICE_TESTS=1 to run tests against a connected device.")
+        guard ProcessInfo.processInfo.environment["ANDROBRIDGE_DEVICE_TESTS"] == "1" else {
+            throw XCTSkip("Set ANDROBRIDGE_DEVICE_TESTS=1 to run tests against a connected device.")
         }
         guard let adb = ADBLocator.locate() else { throw XCTSkip("adb not found") }
         client = ADBClient(adbURL: adb)
         let devices = try await client.devices().filter { $0.state.isReady }
-        let wanted = ProcessInfo.processInfo.environment["PIXELBRIDGE_DEVICE_SERIAL"]
+        let wanted = ProcessInfo.processInfo.environment["ANDROBRIDGE_DEVICE_SERIAL"]
         guard let target = devices.first(where: { wanted == nil || $0.serial == wanted }) else {
             throw XCTSkip("No authorized device connected.")
         }
         device = AndroidDevice(serial: target.serial, client: client)
-        remoteRoot = "/sdcard/Download/PixelBridgeTest-\(UUID().uuidString.prefix(8))"
+        remoteRoot = "/sdcard/Download/AndroBridgeTest-\(UUID().uuidString.prefix(8))"
         try await device.makeDirectory(remoteRoot)
         localRoot = FileManager.default.temporaryDirectory.appendingPathComponent("pb-device-\(UUID().uuidString)")
         try FileManager.default.createDirectory(at: localRoot, withIntermediateDirectories: true)
@@ -183,5 +183,18 @@ final class DeviceIntegrationTests: XCTestCase {
             _ = try await run(request(.toMac, src: RemotePath.join(remoteRoot, "nope.txt"), dest: localRoot.path))
             XCTFail()
         } catch DeviceError.notFound {}
+    }
+}
+
+extension DeviceIntegrationTests {
+    /// Large single-file download (regression: a 180 MB pull once came back short).
+    func testLargeFileDownload() async throws {
+        let remote = RemotePath.join(remoteRoot, "big video.mp4")
+        try await device.shell("dd if=/dev/urandom of=\(ShellQuoting.quote(remote)) bs=1048576 count=180 2>/dev/null", timeout: 120)
+        let out = try await run(request(.toMac, src: remote, dest: localRoot.path))
+        guard case .completed(let path, let bytes, .sha256) = out else { return XCTFail("\(out)") }
+        XCTAssertEqual(bytes, 180 * 1048576)
+        let size = try FileManager.default.attributesOfItem(atPath: path)[.size] as? Int64
+        XCTAssertEqual(size, 180 * 1048576)
     }
 }
