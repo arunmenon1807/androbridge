@@ -4,7 +4,7 @@
 
 | Phase | Status |
 | --- | --- |
-| 1 USB MVP | Done. Tested end to end against an Android 16 emulator over real adb; **awaiting a physical Pixel test** ([checklist](PHONE-TEST-CHECKLIST.md)). |
+| 1 USB MVP | Done. Automated end-to-end tests on an Android 16 emulator over real adb; verified by the maintainer on a physical Google Pixel over USB ([checklist](PHONE-TEST-CHECKLIST.md)). |
 | 2 Improved experience | Done: dual pane, drag & drop, Quick Look, search/sort, multi-select, queue, retry, history, conflict dialog. |
 | 3 Wireless | Implemented (pair, connect, mDNS, remember, reconnect). Untested on a real phone. |
 | 4 Finder + MTP | Not started. Notes below. |
