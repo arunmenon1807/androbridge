@@ -83,3 +83,13 @@ final class SafetyAndNamingTests: XCTestCase {
         XCTAssertNoThrow(try FileTransferService.compare(source: [nfc: 3], copy: [nfd: 3]))
     }
 }
+
+extension SafetyAndNamingTests {
+    func testPairingFailureExplanations() {
+        let fault = ADBClient.explainPairingFailure("error: protocol fault (couldn't read status message): Undefined error: 0")
+        XCTAssertTrue(fault.contains("Pair device with pairing code"), fault)
+        XCTAssertTrue(ADBClient.explainPairingFailure("Failed: Wrong password or connection was dropped.").contains("code didn’t match"))
+        XCTAssertTrue(ADBClient.explainPairingFailure("failed to connect to 192.168.1.2:1234: Connection refused").contains("Local Network"))
+        XCTAssertEqual(ADBClient.explainPairingFailure("something new"), "Pairing failed: something new")
+    }
+}
